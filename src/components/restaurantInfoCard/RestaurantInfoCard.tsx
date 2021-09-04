@@ -1,6 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
+import { View } from "react-native";
+import { Card } from "react-native-paper";
+import { RestaurantCard, RestaurantCover } from "./restaurantsInforCard.styles";
 
 interface RestaurantInfoProps {
   restaurant: any;
@@ -19,26 +20,14 @@ const RestaurantInfoCard = ({ restaurant }: RestaurantInfoProps) => {
     isClosedTemporarily,
   } = restaurant;
 
-  const LeftContent = (props: any) => <Avatar.Icon {...props} icon="folder" />;
-
   return (
     <View>
-      <Card elevation={5} style={styles.card}>
-        <Card.Cover style={styles.cover} source={{ uri: photos[0] }} />
+      <RestaurantCard elevation={5}>
+        <RestaurantCover source={{ uri: photos[0] }} />
         <Card.Title title={name} subtitle="Card Subtitle" />
-      </Card>
+      </RestaurantCard>
     </View>
   );
 };
 
 export default RestaurantInfoCard;
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: "white",
-  },
-  cover: {
-    padding: 16,
-    backgroundColor: "white",
-  },
-});
