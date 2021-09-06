@@ -24,3 +24,19 @@ export const Address = styled.Text`
   font-family: ${(props) => props.theme.fonts.body};
   font-size: ${(props) => props.theme.fontSizes.caption};
 `;
+
+export const Rating = styled.View`
+  flex-direction: row;
+  padding: ${(props) => props.theme.space[3]} 0;
+`;
+
+export const Section = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const SectionEnd = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
