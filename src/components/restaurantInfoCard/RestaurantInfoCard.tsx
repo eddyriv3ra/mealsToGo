@@ -1,7 +1,12 @@
 import React from "react";
 import { View } from "react-native";
-import { Card } from "react-native-paper";
-import { RestaurantCard, RestaurantCover } from "./restaurantsInforCard.styles";
+import {
+  Address,
+  Info,
+  RestaurantCard,
+  RestaurantCover,
+  Title,
+} from "./RestaurantInfoCard.style";
 
 interface RestaurantInfoProps {
   restaurant: any;
@@ -24,7 +29,10 @@ const RestaurantInfoCard = ({ restaurant }: RestaurantInfoProps) => {
     <View>
       <RestaurantCard elevation={5}>
         <RestaurantCover source={{ uri: photos[0] }} />
-        <Card.Title title={name} subtitle="Card Subtitle" />
+        <Info>
+          <Title>{name}</Title>
+          <Address>{address}</Address>
+        </Info>
       </RestaurantCard>
     </View>
   );

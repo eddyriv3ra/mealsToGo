@@ -2,7 +2,7 @@ import React from "react";
 import { Searchbar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RestaurantInfoCard from "../../components/restaurantInfoCard";
-import { SearchbarContainer, CardContainer } from "./restaurants.styles";
+import { SearchbarContainer, CardContainer } from "./restaurants.style";
 
 const Restaurants = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
