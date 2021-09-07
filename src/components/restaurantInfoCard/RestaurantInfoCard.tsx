@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View } from "react-native";
 import { SvgXml } from "react-native-svg";
 import star from "../../../assets/star";
 import open from "../../../assets/open";
@@ -12,8 +12,10 @@ import {
   Rating,
   Section,
   SectionEnd,
+  Icon,
 } from "./RestaurantInfoCard.style";
 import Spacer from "../spacer/Spacer";
+import Text from "../Text/";
 
 interface RestaurantInfoProps {
   restaurant: any;
@@ -39,7 +41,7 @@ const RestaurantInfoCard = ({ restaurant }: RestaurantInfoProps) => {
       <RestaurantCard elevation={5}>
         <RestaurantCover source={{ uri: photos[0] }} />
         <Info>
-          <Title>{name}</Title>
+          <Text variant="label">{name}</Text>
           <Section>
             <Rating>
               {ratingArray.map((rating) => (
@@ -48,12 +50,14 @@ const RestaurantInfoCard = ({ restaurant }: RestaurantInfoProps) => {
             </Rating>
             <SectionEnd>
               {isClosedTemporarily && (
-                <Text style={{ color: "red" }}>CLOSED TEMPORARILY</Text>
+                <Text variant="error">CLOSED TEMPORARILY</Text>
               )}
-              <Spacer location="left" size="large" />
-              {isOpenNow && <SvgXml xml={open} width={20} height={20} />}
-              <Spacer location="left" size="large" />
-              <Image style={{ width: 15, height: 15 }} source={{ uri: icon }} />
+              <Spacer location="left" size="large">
+                {isOpenNow && <SvgXml xml={open} width={20} height={20} />}
+              </Spacer>
+              <Spacer location="left" size="large">
+                <Icon source={{ uri: icon }} />
+              </Spacer>
             </SectionEnd>
           </Section>
           <Address>{address}</Address>

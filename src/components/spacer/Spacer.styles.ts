@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { MyTheme } from "../../../config/theme";
 
 const sizeVariant = {
   small: 1,
@@ -16,7 +17,7 @@ const positionVariant = {
 interface SpacerProps {
   location: "top" | "left" | "right" | "bottom";
   size: "small" | "medium" | "large";
-  theme: any;
+  theme: MyTheme;
 }
 
 const getVariant = ({ location, size, theme }: SpacerProps) => {

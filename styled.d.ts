@@ -1,5 +1,5 @@
 import "styled-components";
-import { MyTheme } from "./src/utils/theme";
+import { MyTheme } from "./config/theme";
 
 // and extend them!
 declare module "styled-components" {

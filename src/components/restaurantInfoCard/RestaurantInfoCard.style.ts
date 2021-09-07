@@ -40,3 +40,8 @@ export const SectionEnd = styled.View`
   flex-direction: row;
   align-items: center;
 `;
+
+export const Icon = styled.Image`
+  width: 15px;
+  height: 15px;
+`;
