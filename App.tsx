@@ -1,15 +1,18 @@
 import React from "react";
-import Restaurants from "./src/screens/restaurants";
 import { ThemeProvider } from "styled-components/native";
 import { theme } from "./config/theme";
 import GoogleFonts from "./config/GoogleFonts";
+import Navigation from "./src/navigation";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <GoogleFonts>
-        <Restaurants />
-      </GoogleFonts>
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider theme={theme}>
+        <GoogleFonts>
+          <Navigation />
+        </GoogleFonts>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }

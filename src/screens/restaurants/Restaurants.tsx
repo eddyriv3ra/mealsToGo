@@ -3,7 +3,7 @@ import { Searchbar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RestaurantInfoCard from "../../components/restaurantInfoCard";
 import Spacer from "../../components/spacer/Spacer";
-import { SearchbarContainer, RestaurantList } from "./restaurants.style";
+import { SearchbarContainer, RestaurantList } from "./Restaurants.style";
 
 const Restaurants = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -12,7 +12,7 @@ const Restaurants = () => {
 
   return (
     <>
-      <SafeAreaView>
+      <SafeAreaView edges={["top"]}>
         <SearchbarContainer>
           <Searchbar
             placeholder="Search"
@@ -43,7 +43,7 @@ const Restaurants = () => {
             <RestaurantInfoCard restaurant={{}} />
           </Spacer>
         )}
-        keyExtractor={(item: any) => item.name}
+        keyExtractor={(item: any) => `${item.name}`}
       />
     </>
   );
