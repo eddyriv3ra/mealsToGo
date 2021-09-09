@@ -10,3 +10,8 @@ export const RestaurantList = styled(FlatList).attrs({
     padding: 16,
   },
 })``;
+
+export const CenterContainer = styled.View`
+  justify-content: center;
+  flex: 1;
+`;
