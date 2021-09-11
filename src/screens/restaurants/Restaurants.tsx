@@ -19,10 +19,19 @@ import {
   RestaurantList,
   CenterContainer,
 } from "./Restaurants.style";
-import { RestaurantInfo } from "../../interfaces/Restaurants";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { RestaurantStackParamList } from "../../navigation/stackNav/RestaurantsStackNav";
+
+type RestaurantsScreenPropNavigation = StackNavigationProp<
+  RestaurantStackParamList,
+  "Restaurants"
+>;
 
 const Restaurants = () => {
   const ctx = useContext(restaurantContext);
+  const navigation = useNavigation<RestaurantsScreenPropNavigation>();
   const [searchQuery, setSearchQuery] = React.useState("");
   const [searchValue, setSearchValue] = React.useState("");
 
@@ -79,11 +88,19 @@ const Restaurants = () => {
         <RestaurantList
           data={ctx?.restaurants.data}
           showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => {
+          renderItem={({ item }: any) => {
             return (
-              <Spacer location="bottom" size="large">
-                <RestaurantInfoCard restaurant={item} />
-              </Spacer>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("RestaurantDetail", {
+                    restaurant: item,
+                  })
+                }
+              >
+                <Spacer location="bottom" size="large">
+                  <RestaurantInfoCard restaurant={item} />
+                </Spacer>
+              </TouchableOpacity>
             );
           }}
           keyExtractor={(item: any, index) => `${item.placeId}-${index}`}

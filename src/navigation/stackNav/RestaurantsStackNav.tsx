@@ -1,20 +1,33 @@
 import { RouteProp, NavigationProp } from "@react-navigation/native";
 import React, { ReactElement } from "react";
 import { enableScreens } from "react-native-screens";
+import { Text } from "react-native";
 import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
 } from "react-native-screens/native-stack";
-
+import { TransitionPresets } from "@react-navigation/stack";
 import Restaurants from "../../screens/restaurants";
+import { RestaurantInfo } from "../../interfaces/Restaurants";
+import restaurantDetail from "../../screens/restaurantDetail";
 
-type TStackParamList = {
+export type RestaurantStackParamList = {
+  Restaurants: undefined;
+  RestaurantDetail: {
+    restaurant: RestaurantInfo;
+  };
+};
+
+export type TStackParamList = {
   Restaurants: ReactElement;
+  RestaurantDetail: {
+    restaurant: RestaurantInfo;
+  };
 };
 
 type TDrawerParamList = {
-  Main: undefined;
   Restaurants: ReactElement;
+  RestaurantDetail: ReactElement;
 };
 
 type TDrawerRouteName = keyof TDrawerParamList;
@@ -54,9 +67,12 @@ const RestaurantsStack: React.FC<INativeStackNavigatorProps> = () => {
       screenOptions={{
         headerShown: false,
         screenOrientation: "portrait",
+        gestureEnabled: true,
+        ...TransitionPresets.ModalPresentationIOS,
       }}
     >
       <Stack.Screen name="Restaurants" component={Restaurants} />
+      <Stack.Screen name="RestaurantDetail" component={restaurantDetail} />
     </Stack.Navigator>
   );
 };
