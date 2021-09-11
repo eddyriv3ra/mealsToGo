@@ -1,3 +1,4 @@
+import { STATUS } from "../../../interfaces/Common";
 import { RestaurantInfo } from "../../../interfaces/Restaurants";
 
 export enum ActionType {
@@ -11,13 +12,6 @@ export interface Action<T = any> {
   data?: T;
   error?: T;
 }
-
-export enum STATUS {
-  PENDING = "PENDING",
-  SUCCESS = "SUCCESS",
-  ERROR = "ERROR",
-}
-
 export interface AppContext {
   dispatch: DispatchFunction;
   restaurants: {

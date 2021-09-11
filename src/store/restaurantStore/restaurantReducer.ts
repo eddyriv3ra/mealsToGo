@@ -1,4 +1,5 @@
-import { Action, ActionType, AppContext, STATUS } from "./interface";
+import { STATUS } from "../../interfaces/Common";
+import { Action, ActionType, AppContext } from "./interface";
 
 const restaurantReducer = (state: AppContext, action: Action): AppContext => {
   switch (action.type) {

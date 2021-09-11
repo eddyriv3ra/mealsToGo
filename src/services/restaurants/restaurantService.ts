@@ -2,7 +2,7 @@ import { mockImages, mocks } from "./mock";
 import camelize from "camelize";
 import { RestaurantInfo } from "../../interfaces/Restaurants";
 
-export const restaurantsRequest = (location = "37.7749295,-122.4194155") => {
+export const restaurantsRequest = (location: string) => {
   return new Promise((resolve, reject) => {
     const mock = mocks[location];
     if (!mock) {
@@ -22,7 +22,8 @@ export const restaurantsTransform = ({ results }: any) => {
       });
       return {
         ...restaurant,
-        isOpenHours: restaurant.openingHours && restaurant.openingHours.openNow,
+        address: restaurant.vicinity,
+        isOpenNow: restaurant?.openingHours?.openNow,
         isClosedTemporarily: restaurant.businessStatus === "CLOSED_TEMPORARILY",
       };
     }

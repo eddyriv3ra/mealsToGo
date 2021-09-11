@@ -1,5 +1,6 @@
 import React, { useReducer } from "react";
-import { Action, AppContext, STATUS } from "./interface";
+import { STATUS } from "../../interfaces/Common";
+import { Action, AppContext } from "./interface";
 import RestaurantContext from "./restaurantContext";
 import restaurantReducer from "./restaurantReducer";
 

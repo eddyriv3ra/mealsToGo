@@ -4,7 +4,6 @@ import { theme } from "./config/theme";
 import GoogleFonts from "./config/GoogleFonts";
 import Navigation from "./src/navigation";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { restaurantsRequest } from "./src/services/restaurants/restaurantService";
 import RestaurantState from "./src/store/restaurantStore/restaurantState";
 
 export default function App() {
