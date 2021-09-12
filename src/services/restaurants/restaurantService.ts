@@ -14,7 +14,6 @@ export const restaurantsRequest = (location: string) => {
 
 export const restaurantsTransform = ({ results }: any) => {
   const camelizedResult = camelize(results);
-  // console.log("camelizedResult", Array.isArray(camelizedResult));
   const mappedResults: RestaurantInfo = camelizedResult.map(
     (restaurant: RestaurantInfo) => {
       restaurant.photos = restaurant.photos.map((p) => {

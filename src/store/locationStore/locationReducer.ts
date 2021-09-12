@@ -1,39 +1,37 @@
 import { STATUS } from "../../interfaces/Common";
-import { Action, ActionType, AppContext } from "./interface";
+import { Action, LocationActionType, LocationContext } from "./interface";
 
-const restaurantReducer = (state: AppContext, action: Action): AppContext => {
+const restaurantReducer = (
+  state: LocationContext,
+  action: Action
+): LocationContext => {
   switch (action.type) {
-    case ActionType.GET_RESTAURANTS_PENDING:
+    case LocationActionType.GET_LOCATION_PENDING:
       return {
         ...state,
-        restaurants: {
+        location: {
           status: STATUS.PENDING,
           error: "",
           data: [],
         },
       };
-    case ActionType.GET_RESTAURANTS_SUCCESS:
+    case LocationActionType.GET_LOCATION_SUCCESS:
       return {
         ...state,
-        restaurants: {
+        location: {
           status: STATUS.SUCCESS,
           error: "",
           data: action.data,
         },
       };
-    case ActionType.GET_RESTAURANTS_ERROR:
+    case LocationActionType.GET_LOCATION_ERROR:
       return {
         ...state,
-        restaurants: {
+        location: {
           status: STATUS.ERROR,
           error: action.error,
           data: [],
         },
-      };
-    case ActionType.SET_KEYWORD:
-      return {
-        ...state,
-        keyword: action.data,
       };
     default:
       return state;

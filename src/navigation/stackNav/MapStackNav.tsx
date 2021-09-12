@@ -5,28 +5,18 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
 } from "react-native-screens/native-stack";
-import { TransitionPresets } from "@react-navigation/stack";
-import Restaurants from "../../screens/restaurants";
-import { RestaurantInfo } from "../../interfaces/Restaurants";
-import RestaurantDetail from "../../screens/restaurantDetail";
+import Map from "../../screens/map";
 
-export type RestaurantStackParamList = {
-  Restaurants: undefined;
-  RestaurantDetail: {
-    restaurant: RestaurantInfo;
-  };
+export type MapStackParamList = {
+  Map: undefined;
 };
 
 export type TStackParamList = {
-  Restaurants: ReactElement;
-  RestaurantDetail: {
-    restaurant: RestaurantInfo;
-  };
+  Map: ReactElement;
 };
 
 type TDrawerParamList = {
-  Restaurants: ReactElement;
-  RestaurantDetail: ReactElement;
+  Map: ReactElement;
 };
 
 type TDrawerRouteName = keyof TDrawerParamList;
@@ -42,8 +32,8 @@ export type TDrawerNavProp<RouteName extends TDrawerRouteName> = NavigationProp<
 >;
 
 interface INativeStackNavigatorProps {
-  route: TDrawerRouteProp<"Restaurants">;
-  navigation: TDrawerNavProp<"Restaurants">;
+  route: TDrawerRouteProp<"Map">;
+  navigation: TDrawerNavProp<"Map">;
 }
 
 export type TStackRouteName = keyof TStackParamList;
@@ -59,21 +49,19 @@ export type TStackRouteProp<RouteName extends TStackRouteName> = RouteProp<
 enableScreens();
 const Stack = createNativeStackNavigator<TStackParamList>();
 
-const RestaurantsStack: React.FC<INativeStackNavigatorProps> = () => {
+const MapStack: React.FC<INativeStackNavigatorProps> = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Restaurants"
+      initialRouteName="Map"
       screenOptions={{
         headerShown: false,
         screenOrientation: "portrait",
         gestureEnabled: true,
-        ...TransitionPresets.ModalPresentationIOS,
       }}
     >
-      <Stack.Screen name="Restaurants" component={Restaurants} />
-      <Stack.Screen name="RestaurantDetail" component={RestaurantDetail} />
+      <Stack.Screen name="Map" component={Map} />
     </Stack.Navigator>
   );
 };
 
-export default RestaurantsStack;
+export default MapStack;

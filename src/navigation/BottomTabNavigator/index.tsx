@@ -1,6 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import RestaurantsStack from "../stackNav/RestaurantsStackNav";
+import MapStack from "../stackNav/MapStackNav";
 import { Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -44,13 +45,13 @@ const BottomTabNavigator = () => {
         component={RestaurantsStack}
       />
       <BottomTab.Screen
-        name="Settings"
-        component={Settings}
+        name="Map"
+        component={MapStack}
         options={{ headerShown: false }}
       />
       <BottomTab.Screen
-        name="Map"
-        component={Map}
+        name="Settings"
+        component={Settings}
         options={{ headerShown: false }}
       />
     </BottomTab.Navigator>

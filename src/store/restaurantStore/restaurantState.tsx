@@ -17,6 +17,7 @@ const RestaurantState = ({ children }: RestaurantProps) => {
       status: STATUS.PENDING,
       error: "",
     },
+    keyword: "",
   };
   const [state, _dispatch] = useReducer(restaurantReducer, data);
 

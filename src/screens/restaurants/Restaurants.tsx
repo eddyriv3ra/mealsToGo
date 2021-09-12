@@ -1,5 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Searchbar, ActivityIndicator } from "react-native-paper";
+import { useFocusEffect } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RestaurantInfoCard from "../../components/restaurantInfoCard";
 import Spacer from "../../components/spacer/Spacer";
@@ -23,6 +24,8 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { RestaurantStackParamList } from "../../navigation/stackNav/RestaurantsStackNav";
+import locationContext from "../../store/locationStore/locationContext";
+import { LocationActionType } from "../../store/locationStore/interface";
 
 type RestaurantsScreenPropNavigation = StackNavigationProp<
   RestaurantStackParamList,
@@ -31,40 +34,64 @@ type RestaurantsScreenPropNavigation = StackNavigationProp<
 
 const Restaurants = () => {
   const ctx = useContext(restaurantContext);
+  const locationCtx = useContext(locationContext);
   const navigation = useNavigation<RestaurantsScreenPropNavigation>();
   const [searchQuery, setSearchQuery] = React.useState("");
   const [searchValue, setSearchValue] = React.useState("");
 
   const onChangeSearch = (query: string) => setSearchQuery(query);
-
-  useEffect(() => {
-    ctx?.dispatch({ type: ActionType.GET_RESTAURANTS_PENDING });
-    const fetchRestaurants = async () => {
-      const locationValue = await locationRequest(
-        searchQuery?.toLocaleLowerCase()
-      );
-
-      const location = locationTransform(locationValue);
-      const locationString = `${location.lat},${location.lng}`;
-      setTimeout(async () => {
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchRestaurants = async () => {
+        let locationString: string;
+        locationCtx?.dispatch({
+          type: LocationActionType.GET_LOCATION_PENDING,
+        });
         try {
-          const data = await restaurantsRequest(locationString);
-          const normalizeData = restaurantsTransform(data);
-
-          ctx?.dispatch({
-            type: ActionType.GET_RESTAURANTS_SUCCESS,
-            data: normalizeData,
+          const locationValue: any = await locationRequest(
+            searchQuery?.toLocaleLowerCase()
+          );
+          locationCtx?.dispatch({
+            type: LocationActionType.GET_LOCATION_SUCCESS,
+            data: locationValue.results,
           });
+          const location = locationTransform(locationValue);
+          locationString = `${location.lat},${location.lng}`;
         } catch (error) {
-          ctx?.dispatch({
-            type: ActionType.GET_RESTAURANTS_ERROR,
+          locationCtx?.dispatch({
+            type: LocationActionType.GET_LOCATION_ERROR,
             error,
           });
         }
-      }, 2000);
-    };
-    fetchRestaurants();
-  }, [searchValue]);
+        ctx?.dispatch({
+          type: ActionType.GET_RESTAURANTS_PENDING,
+        });
+        setTimeout(async () => {
+          try {
+            const data = await restaurantsRequest(locationString);
+            const normalizeData = restaurantsTransform(data);
+
+            ctx?.dispatch({
+              type: ActionType.GET_RESTAURANTS_SUCCESS,
+              data: normalizeData,
+            });
+          } catch (error) {
+            ctx?.dispatch({
+              type: ActionType.GET_RESTAURANTS_ERROR,
+              error,
+            });
+          }
+        }, 2000);
+      };
+      fetchRestaurants();
+    }, [searchValue, ctx?.keyword])
+  );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setSearchQuery(ctx?.keyword || "");
+    }, [ctx?.keyword])
+  );
 
   return (
     <>
@@ -75,6 +102,10 @@ const Restaurants = () => {
             onChangeText={onChangeSearch}
             value={searchQuery}
             onSubmitEditing={() => {
+              ctx?.dispatch({
+                type: ActionType.SET_KEYWORD,
+                data: searchQuery,
+              });
               setSearchValue(searchQuery);
             }}
           />
