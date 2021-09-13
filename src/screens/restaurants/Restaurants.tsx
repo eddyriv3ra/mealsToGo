@@ -3,6 +3,7 @@ import { Searchbar, ActivityIndicator } from "react-native-paper";
 import { useFocusEffect } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RestaurantInfoCard from "../../components/restaurantInfoCard";
+import FavouritesBar from "../../components/favouritesBar";
 import Spacer from "../../components/spacer/Spacer";
 import { STATUS } from "../../interfaces/Common";
 import {
@@ -26,6 +27,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { RestaurantStackParamList } from "../../navigation/stackNav/RestaurantsStackNav";
 import locationContext from "../../store/locationStore/locationContext";
 import { LocationActionType } from "../../store/locationStore/interface";
+import { FavouritesContext } from "../../store/favourites/favouritesContext";
+import Favourite from "../../components/favourites";
 
 type RestaurantsScreenPropNavigation = StackNavigationProp<
   RestaurantStackParamList,
@@ -35,11 +38,14 @@ type RestaurantsScreenPropNavigation = StackNavigationProp<
 const Restaurants = () => {
   const ctx = useContext(restaurantContext);
   const locationCtx = useContext(locationContext);
+  const { favourites } = useContext(FavouritesContext);
   const navigation = useNavigation<RestaurantsScreenPropNavigation>();
   const [searchQuery, setSearchQuery] = React.useState("");
   const [searchValue, setSearchValue] = React.useState("");
+  const [isToggled, setIsToggled] = React.useState(false);
 
   const onChangeSearch = (query: string) => setSearchQuery(query);
+
   useFocusEffect(
     React.useCallback(() => {
       const fetchRestaurants = async () => {
@@ -99,6 +105,8 @@ const Restaurants = () => {
         <SearchbarContainer>
           <Searchbar
             placeholder="Search"
+            icon={isToggled ? "heart" : "heart-outline"}
+            onIconPress={() => setIsToggled(!isToggled)}
             onChangeText={onChangeSearch}
             value={searchQuery}
             onSubmitEditing={() => {
@@ -110,6 +118,7 @@ const Restaurants = () => {
             }}
           />
         </SearchbarContainer>
+        {isToggled && <FavouritesBar favourites={favourites} />}
       </SafeAreaView>
       {ctx?.restaurants.status === (STATUS.PENDING || STATUS.ERROR) ? (
         <CenterContainer>
@@ -121,17 +130,20 @@ const Restaurants = () => {
           showsVerticalScrollIndicator={false}
           renderItem={({ item }: any) => {
             return (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("RestaurantDetail", {
-                    restaurant: item,
-                  })
-                }
-              >
-                <Spacer location="bottom" size="large">
-                  <RestaurantInfoCard restaurant={item} />
-                </Spacer>
-              </TouchableOpacity>
+              <>
+                <Favourite restaurant={item} />
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("RestaurantDetail", {
+                      restaurant: item,
+                    })
+                  }
+                >
+                  <Spacer location="bottom" size="large">
+                    <RestaurantInfoCard restaurant={item} />
+                  </Spacer>
+                </TouchableOpacity>
+              </>
             );
           }}
           keyExtractor={(item: any, index) => `${item.placeId}-${index}`}

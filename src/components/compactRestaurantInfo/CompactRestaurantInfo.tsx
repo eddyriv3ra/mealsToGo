@@ -13,12 +13,16 @@ const isAndroid = Platform.OS === "android";
 
 interface CompactRestaurantInfoProps {
   restaurant: RestaurantInfo;
+  isMap?: boolean;
 }
 
-const CompactRestaurantInfo = ({ restaurant }: CompactRestaurantInfoProps) => {
+const CompactRestaurantInfo = ({
+  restaurant,
+  isMap = false,
+}: CompactRestaurantInfoProps) => {
   return (
     <Item>
-      {isAndroid ? (
+      {isAndroid && isMap ? (
         <CompactWebview source={{ uri: restaurant.photos[0] }} />
       ) : (
         <CompactImage source={{ uri: restaurant.photos[0] }} />

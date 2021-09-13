@@ -8,7 +8,6 @@ import {
   Info,
   RestaurantCard,
   RestaurantCover,
-  Title,
   Rating,
   Section,
   SectionEnd,
@@ -16,6 +15,7 @@ import {
 } from "./RestaurantInfoCard.style";
 import Spacer from "../spacer/Spacer";
 import Text from "../Text/";
+import Favourite from "../favourites";
 
 interface RestaurantInfoProps {
   restaurant: any;
@@ -36,9 +36,10 @@ const RestaurantInfoCard = ({ restaurant }: RestaurantInfoProps) => {
   const ratingArray = [...Array(Math.floor(rating)).keys()];
 
   return (
-    <View>
-      <RestaurantCard elevation={5}>
-        <RestaurantCover source={{ uri: photos[0] }} />
+    <>
+      <RestaurantCard elevation={2}>
+        <Favourite restaurant={restaurant} />
+        <RestaurantCover key={name} source={{ uri: photos[0] }} />
         <Info>
           <Text variant="label">{name}</Text>
           <Section>
@@ -67,7 +68,7 @@ const RestaurantInfoCard = ({ restaurant }: RestaurantInfoProps) => {
           <Address>{address}</Address>
         </Info>
       </RestaurantCard>
-    </View>
+    </>
   );
 };
 

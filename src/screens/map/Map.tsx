@@ -140,7 +140,7 @@ const MapComponennt = () => {
                   })
                 }
               >
-                <CompactRestaurantInfo restaurant={restaurant} />
+                <CompactRestaurantInfo restaurant={restaurant} isMap />
               </Callout>
             </Marker>
           );
