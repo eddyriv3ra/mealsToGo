@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { AuthenticationContext } from "../../store/authentication/authenticationContext";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import RestaurantsStack from "../stackNav/RestaurantsStackNav";
 import MapStack from "../stackNav/MapStackNav";
-import { Text } from "react-native";
+import { Text, Button } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 interface TabIconType {
@@ -10,7 +12,7 @@ interface TabIconType {
 }
 
 const TAB_ICON: TabIconType = {
-  Main: "md-restaurant",
+  MainScreen: "md-restaurant",
   Map: "md-map",
   Settings: "md-settings",
 };
@@ -26,19 +28,26 @@ const createScreenOptions = ({ route }: any) => {
   };
 };
 
-const Settings = () => <Text>Setting</Text>;
-const Map = () => <Text>Map</Text>;
+const Settings = () => {
+  const { onLogout } = useContext(AuthenticationContext);
+  return (
+    <SafeAreaView>
+      <Text>Settings</Text>
+      <Button title="logout" onPress={() => onLogout()} />
+    </SafeAreaView>
+  );
+};
 
 const BottomTab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
   return (
     <BottomTab.Navigator
-      initialRouteName="Main"
+      initialRouteName="MainScreen"
       screenOptions={createScreenOptions}
     >
       <BottomTab.Screen
-        name="Main"
+        name="MainScreen"
         options={{
           headerShown: false,
         }}
