@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-// import LottieView from "lottie-react-native";
+import LottieView from "lottie-react-native";
 import Spacer from "../../components/spacer";
 import { StackNavigationProp } from "@react-navigation/stack";
 import {
@@ -24,7 +24,7 @@ const AccountScreen = () => {
   return (
     <AccountBackground>
       <AccountCover />
-      {/* <AnimationWrapper>
+      <AnimationWrapper>
         <LottieView
           key="animation"
           autoPlay
@@ -32,7 +32,7 @@ const AccountScreen = () => {
           resizeMode="cover"
           source={require("../../../assets/watermelon.json")}
         />
-      </AnimationWrapper> */}
+      </AnimationWrapper>
       <Title>Meals To Go</Title>
       <AccountContainer>
         <AuthButton
