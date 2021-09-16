@@ -9,10 +9,12 @@ import { TransitionPresets } from "@react-navigation/stack";
 import { RestaurantInfo } from "../../interfaces/Restaurants";
 import SettingsScreen from "../../screens/settings/Settings";
 import FavouritesScreen from "../../screens/favourites/Favourites";
+import CameraScreen from "../../screens/camera";
 
 export type SettingsStackParamList = {
   Settings: undefined;
   Favourites: undefined;
+  Camera: undefined;
 };
 
 export type TStackParamList = {
@@ -20,11 +22,13 @@ export type TStackParamList = {
   Favourites: {
     restaurant: RestaurantInfo;
   };
+  Camera: ReactElement;
 };
 
 type TDrawerParamList = {
   Settings: ReactElement;
   Favourites: ReactElement;
+  Camera: ReactElement;
 };
 
 type TDrawerRouteName = keyof TDrawerParamList;
@@ -70,6 +74,7 @@ const SettingsStack: React.FC<INativeStackNavigatorProps> = () => {
     >
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="Favourites" component={FavouritesScreen} />
+      <Stack.Screen name="Camera" component={CameraScreen} />
     </Stack.Navigator>
   );
 };
