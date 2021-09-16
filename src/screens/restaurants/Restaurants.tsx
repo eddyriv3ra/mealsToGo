@@ -29,6 +29,7 @@ import locationContext from "../../store/locationStore/locationContext";
 import { LocationActionType } from "../../store/locationStore/interface";
 import { FavouritesContext } from "../../store/favourites/favouritesContext";
 import Favourite from "../../components/favourites";
+import FadeInView from "../../components/animations/FadeAnimation";
 
 type RestaurantsScreenPropNavigation = StackNavigationProp<
   RestaurantStackParamList,
@@ -140,7 +141,9 @@ const Restaurants = () => {
                   }
                 >
                   <Spacer location="bottom" size="large">
-                    <RestaurantInfoCard restaurant={item} />
+                    <FadeInView>
+                      <RestaurantInfoCard restaurant={item} />
+                    </FadeInView>
                   </Spacer>
                 </TouchableOpacity>
               </>
