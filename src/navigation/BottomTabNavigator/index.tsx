@@ -1,11 +1,9 @@
-import React, { useContext } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { AuthenticationContext } from "../../store/authentication/authenticationContext";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import RestaurantsStack from "../stackNav/RestaurantsStackNav";
 import MapStack from "../stackNav/MapStackNav";
-import { Text, Button } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import SettingsStack from "../stackNav/SettingsStackNav";
 
 interface TabIconType {
   [key: string]: "md-restaurant" | "md-map" | "md-settings";
@@ -26,16 +24,6 @@ const createScreenOptions = ({ route }: any) => {
     tabBarActiveTintColor: "tomato",
     tabBarInactiveTintColor: "gray",
   };
-};
-
-const Settings = () => {
-  const { onLogout } = useContext(AuthenticationContext);
-  return (
-    <SafeAreaView>
-      <Text>Settings</Text>
-      <Button title="logout" onPress={() => onLogout()} />
-    </SafeAreaView>
-  );
 };
 
 const BottomTab = createBottomTabNavigator();
@@ -60,7 +48,7 @@ const BottomTabNavigator = () => {
       />
       <BottomTab.Screen
         name="Settings"
-        component={Settings}
+        component={SettingsStack}
         options={{ headerShown: false }}
       />
     </BottomTab.Navigator>
