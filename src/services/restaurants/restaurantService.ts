@@ -1,31 +1,19 @@
-import { mockImages, mocks } from "./mock";
-import camelize from "camelize";
-import { RestaurantInfo } from "../../interfaces/Restaurants";
-
 export const restaurantsRequest = (location: string) => {
-  return new Promise((resolve, reject) => {
-    const mock = mocks[location];
-    if (!mock) {
-      reject("not found");
-    }
-    resolve(mock);
+  return fetch(
+    `http://localhost:5001/mealstogo-325816/us-central1/placesNearby?location=${location}`
+  ).then((res) => {
+    return res.json();
   });
 };
 
 export const restaurantsTransform = ({ results }: any) => {
-  const camelizedResult = camelize(results);
-  const mappedResults: RestaurantInfo = camelizedResult.map(
-    (restaurant: RestaurantInfo) => {
-      restaurant.photos = restaurant.photos.map((p) => {
-        return mockImages[Math.ceil(Math.random() * (mockImages.length - 1))];
-      });
-      return {
-        ...restaurant,
-        address: restaurant.vicinity,
-        isOpenNow: restaurant?.openingHours?.openNow,
-        isClosedTemporarily: restaurant.businessStatus === "CLOSED_TEMPORARILY",
-      };
-    }
-  );
+  const mappedResults = results.map((restaurant: any) => {
+    return {
+      ...restaurant,
+      address: restaurant.vicinity,
+      isOpenNow: restaurant.opening_hours && restaurant.opening_hours.open_now,
+      isClosedTemporarily: restaurant.business_status === "CLOSED_TEMPORARILY",
+    };
+  });
   return mappedResults;
 };

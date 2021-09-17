@@ -41,7 +41,7 @@ const Restaurants = () => {
   const locationCtx = useContext(locationContext);
   const { favourites } = useContext(FavouritesContext);
   const navigation = useNavigation<RestaurantsScreenPropNavigation>();
-  const [searchQuery, setSearchQuery] = React.useState("");
+  const [searchQuery, setSearchQuery] = React.useState("San Francisco");
   const [searchValue, setSearchValue] = React.useState("");
   const [isToggled, setIsToggled] = React.useState(false);
 
@@ -50,7 +50,7 @@ const Restaurants = () => {
   useFocusEffect(
     React.useCallback(() => {
       const fetchRestaurants = async () => {
-        let locationString: string;
+        let locationString: string = "";
         locationCtx?.dispatch({
           type: LocationActionType.GET_LOCATION_PENDING,
         });
@@ -73,22 +73,20 @@ const Restaurants = () => {
         ctx?.dispatch({
           type: ActionType.GET_RESTAURANTS_PENDING,
         });
-        setTimeout(async () => {
-          try {
-            const data = await restaurantsRequest(locationString);
-            const normalizeData = restaurantsTransform(data);
+        try {
+          const data = await restaurantsRequest(locationString);
+          const normalizeData = restaurantsTransform(data);
 
-            ctx?.dispatch({
-              type: ActionType.GET_RESTAURANTS_SUCCESS,
-              data: normalizeData,
-            });
-          } catch (error) {
-            ctx?.dispatch({
-              type: ActionType.GET_RESTAURANTS_ERROR,
-              error,
-            });
-          }
-        }, 2000);
+          ctx?.dispatch({
+            type: ActionType.GET_RESTAURANTS_SUCCESS,
+            data: normalizeData,
+          });
+        } catch (error) {
+          ctx?.dispatch({
+            type: ActionType.GET_RESTAURANTS_ERROR,
+            error,
+          });
+        }
       };
       fetchRestaurants();
     }, [searchValue, ctx?.keyword])

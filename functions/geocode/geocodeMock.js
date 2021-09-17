@@ -1,4 +1,4 @@
-export const locations: any = {
+module.exports.locations = {
   antwerp: {
     results: [
       {
