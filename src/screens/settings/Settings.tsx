@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/core";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { List, Avatar } from "react-native-paper";
 import { TouchableOpacity } from "react-native";
 import Spacer from "../../components/spacer";
@@ -8,23 +8,49 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { AuthenticationContext } from "../../store/authentication/authenticationContext";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { SettingsItem, AvatarContainer } from "./Settings.style";
-// type SettingsScreenPropNavigation = StackNavigationProp<
-//   FAvour,
-//   "Restaurants"
-// >;
+import { SettingsStackParamList } from "../../navigation/stackNav/SettingsStackNav";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
+
+type SettingsScreenPropNavigation = StackNavigationProp<
+  SettingsStackParamList,
+  "Settings"
+>;
 
 const SettingsScreen = () => {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<SettingsScreenPropNavigation>();
   const { onLogout, user } = useContext(AuthenticationContext);
+  const [photo, setPhoto] = useState<string | null>(null);
+
+  const getProfilePicture = async (currentUser: any) => {
+    const photoUri = await AsyncStorage.getItem(`${currentUser.uid}-photo`);
+    setPhoto(photoUri);
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getProfilePicture(user);
+    }, [user])
+  );
+
   return (
     <SafeAreaView>
       <AvatarContainer>
         <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
-          <Avatar.Icon
-            size={180}
-            icon="human"
-            style={{ backgroundColor: "#2182BD" }}
-          />
+          {!photo && (
+            <Avatar.Icon
+              size={180}
+              icon="human"
+              style={{ backgroundColor: "#2182BD" }}
+            />
+          )}
+          {photo && (
+            <Avatar.Image
+              size={180}
+              source={{ uri: photo }}
+              style={{ backgroundColor: "#2182BD" }}
+            />
+          )}
         </TouchableOpacity>
         <Spacer location="top" size="large">
           <Text variant="label">{user.email}</Text>
