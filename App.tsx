@@ -8,7 +8,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import AuthenticationContext from "./src/store/authentication/authenticationContext";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDSZTELbF3behMQJNnbvgQmQpeZyT2xhLg",
+  apiKey: "AIzaSyCRsUbcJASzkdReSjwIcOuZWrbNOj_wvx4",
   authDomain: "mealstogo-325816.firebaseapp.com",
   projectId: "mealstogo-325816",
   storageBucket: "mealstogo-325816.appspot.com",

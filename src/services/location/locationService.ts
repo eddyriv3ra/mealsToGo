@@ -1,11 +1,14 @@
 import camelize from "camelize";
+import { host } from "../../utils";
 
 export const locationRequest = (searchTerm?: string) => {
-  return fetch(
-    `http://localhost:5001/mealstogo-325816/us-central1/geocode?city=${searchTerm}`
-  ).then((res) => {
-    return res.json();
-  });
+  return fetch(`${host}/geocode?city=${searchTerm}&isMock=false`)
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => {
+      console.log("error", err);
+    });
 };
 
 export const locationTransform = (result: any) => {

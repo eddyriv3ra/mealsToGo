@@ -1,9 +1,13 @@
+import { host } from "../../utils";
+
 export const restaurantsRequest = (location: string) => {
-  return fetch(
-    `http://localhost:5001/mealstogo-325816/us-central1/placesNearby?location=${location}`
-  ).then((res) => {
-    return res.json();
-  });
+  return fetch(`${host}/placesNearby?location=${location}&isMock=false`)
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => {
+      console.log("err", err);
+    });
 };
 
 export const restaurantsTransform = ({ results }: any) => {

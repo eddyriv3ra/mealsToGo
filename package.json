@@ -6,7 +6,10 @@
     "web": "expo start --web",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint --ext .tsx --ext .ts src/"
+    "lint": "eslint --ext .tsx --ext .ts src/",
+    "firebase": "yarn serve --prefix functions",
+    "dev-ios": "concurrently \"yarn ios\" \"cd ./functions && yarn serve\"",
+    "dev-android": "concurrently \"yarn android\"  \"cd ./functions && yarn serve\""
   },
   "dependencies": {
     "@expo-google-fonts/lato": "^0.2.0",
@@ -17,6 +20,7 @@
     "@react-navigation/native-stack": "^6.1.0",
     "@react-navigation/stack": "^6.0.7",
     "camelize": "^1.0.0",
+    "concurrently": "^6.2.1",
     "expo": "~41.0.1",
     "expo-font": "~9.1.0",
     "expo-splash-screen": "~0.10.2",
