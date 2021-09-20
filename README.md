@@ -8,6 +8,17 @@ This project uses React Navigation and typescript
 
 To install the application follow the steps below in the console, you need to have installed nodejs, git and yarn.
 
+Create file `.runtimeconfig.json` on functions root folder and insert your google place api key like below.
+
+```
+{
+  "google": {
+    "key": "AIzaSyDZluORhrlq2yAWR0xOkmyfL6WnzfPe-qI"
+  }
+}
+
+```
+
 Download repo:
 
 ```
