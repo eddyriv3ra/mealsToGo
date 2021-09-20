@@ -13,7 +13,7 @@ Create file `.runtimeconfig.json` on functions root folder and insert your googl
 ```
 {
   "google": {
-    "key": "AIzaSyDZluORhrlq2yAWR0xOkmyfL6WnzfPe-qI"
+    "key": "insert google api key here"
   }
 }
 
